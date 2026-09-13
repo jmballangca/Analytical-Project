@@ -43,7 +43,7 @@ The project consists of a **student mobile application** and a **web-based admin
 ### Student Application
 
 <p align="center">
-  <img src="images/images/Screenshot_20260913_212818.png" width="45%" alt="Analytical Games Home Screen" />
+  <img src="images/images/home.png" width="45%" alt="Analytical Games Home Screen" />
   &nbsp;&nbsp;
   <img src="images/leaderboard.png" width="45%" alt="Analytical Games Leaderboard Screen" />
 </p>
