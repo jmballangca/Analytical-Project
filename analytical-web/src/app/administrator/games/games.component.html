@@ -1,0 +1,99 @@
+<div class="container-fluid d-flex flex-column h-100 gap-3 p-3">
+  <div class="row">
+    <div class="col">
+      <div class="box">
+        <div class="d-flex gap-2 align-items-center">
+          <img
+            src="../../../assets/images/rebus.png"
+            width="50px"
+            height="50px"
+          />
+          <div class="">
+            <h5>{{ filterByCategory("PUZZLE_GAME") }}</h5>
+            <p class="text-secondary">Puzzle Game</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="box">
+        <div class="d-flex gap-2 align-items-center">
+          <img
+            src="../../../assets/images/riddle.png"
+            width="50px"
+            height="50px"
+          />
+          <div class="">
+            <h5>{{ filterByCategory("QUIZ_GAME") }}</h5>
+            <p class="text-secondary">Quiz Game</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="box">
+        <div class="d-flex gap-2 align-items-center">
+          <img
+            src="../../../assets/images/math.png"
+            width="50px"
+            height="50px"
+          />
+          <div class="">
+            <h5>{{ filterByCategory("MATH_GAME") }}</h5>
+            <p class="text-secondary">Math Game</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="box">
+        <div class="d-flex gap-2 align-items-center">
+          <img
+            src="../../../assets/images/word.png"
+            width="50px"
+            height="50px"
+          />
+          <div class="">
+            <h5>{{ filterByCategory("MEMORY_GAME") }}</h5>
+
+            <p class="text-secondary">Memory Game</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-4 p-3">
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="input-group w-50">
+        <input
+          type="text"
+          [formControl]="searchText"
+          class="search-input w-100"
+          placeholder="Search games..."
+        />
+      </div>
+      <button class="btn btn-dark" (click)="createQuiz()">Create Game</button>
+    </div>
+    <div class="row row-cols-4 mt-3">
+      <div class="col" *ngFor="let quiz of filteredQuiz$">
+        <div class="quiz-card rounded" (click)="viewGame(quiz.id)">
+          <img
+            [src]="quiz.cover_photo"
+            height="200px"
+            width="100%"
+            [alt]="quiz.title"
+            class="rounded"
+          />
+          <div class="p-3">
+            <h6>{{ quiz.title }}</h6>
+            <p class="text-muted fw-normal multiline-ellipsis">
+              {{ quiz.desc }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

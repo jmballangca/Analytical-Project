@@ -1,0 +1,110 @@
+<div class="container-fluid p-3">
+  <div class="row g-2 h-100">
+    <div class="col-8">
+      <div class="row g-2">
+        <div class="col-4">
+          <div class="box border-start border-4 border-success">
+            <h5 class="title">{{ (students$ | async)?.length }}</h5>
+            <span class="text-muted">Students</span>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="box border-start border-4 border-warning">
+            <h5 class="title">{{ (games$ | async)?.length }}</h5>
+            <span class="text-muted">Total Games</span>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="box border-start border-4 border-danger">
+            <div class="d-flex gap-2">
+              <div>
+                <h5 class="title">{{ (submissions$ | async)?.length }}</h5>
+                <span class="text-muted">Total Submissions</span>
+              </div>
+              <i class="fa-solid fa-people-group"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="box">
+            <h5 class="title">Most Played Categories</h5>
+            <canvas
+              baseChart
+              [data]="pieChartData"
+              [labels]="pieChartData.labels"
+              [options]="pieChartOptions"
+              [type]="pieChartType"
+            ></canvas>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="box">
+            <h5 class="title">Average Score per game</h5>
+            <canvas
+              baseChart
+              [data]="barChartData"
+              [labels]="barChartData.labels"
+              [options]="barChartOptions"
+              [type]="barChartType"
+            ></canvas>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="box">
+            <div class="d-flex align-items-center justify-content-between">
+              <h5 class="title">Top Students</h5>
+              <button class="btn btn-light btn-sm" routerLink="leaderboard">
+                See all
+              </button>
+            </div>
+
+            <ul
+              class="list-group list-group-flush"
+              *ngFor="let students of top5Students$ | async"
+            >
+              <li class="list-group-item">
+                <div class="d-flex align-items-center justify-content-between">
+                  <h6>
+                    {{ students.student.fname }}
+                    {{ students.student.mname[0] }}.
+                    {{ students.student.lname }}
+                  </h6>
+                  <p class="fs-6">+{{ students.points }}</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="box">
+        <div class="d-flex align-items-center justify-content-between">
+          <h5 class="title">Recent Submmisions</h5>
+          <button class="btn btn-sm" routerLink="submissions">See all</button>
+        </div>
+        <ul
+          class="list-group list-group-flush"
+          *ngFor="let submission of recent$ | async"
+        >
+          <li class="list-group-item">
+            <div class="d-flex align-items-center">
+              <img
+                [src]="
+                  submission?.profile || '../../../../assets/images/profile.jpg'
+                "
+                class="rounded-circle"
+                width="40px"
+                height="40px"
+              />
+              <div class="flex-grow-1 p-2">
+                <h6 class="p-0">{{ submission.name }}</h6>
+              </div>
+              <h6 class="fw-bold text-success">+ {{ submission.earning }}</h6>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

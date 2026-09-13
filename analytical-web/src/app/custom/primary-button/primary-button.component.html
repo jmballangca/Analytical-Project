@@ -1,0 +1,4 @@
+<button class="btn btn-dark p-2 w-100" (click)="(event)" [disabled]="isLoading">
+  <i class="fa fa-spin fa-spinner me-3" *ngIf="isLoading == true"></i>
+  {{ isLoading ? "Loading" : title }}
+</button>

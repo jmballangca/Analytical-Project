@@ -1,0 +1,136 @@
+<div class="modal-header bg-dark">
+  <h5 class="modal-title text-light">Edit Question</h5>
+</div>
+<div class="modal-body">
+  <form (submit)="onSubmit()" [formGroup]="questionForm$" class="row g-3">
+    <div class="col-md-12 p-3">
+      <app-image-picker
+        (onSelected)="onSelectImage($event)"
+        [selectedImage]="question.image"
+      />
+    </div>
+    <div class="col-md-6">
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          [readOnly]="questionForm$.controls['category'].value === 'MATH_GAME'"
+          id="question"
+          formControlName="question"
+        />
+        <label for="question">Question</label>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="category"
+          readonly
+          formControlName="category"
+        />
+        <label for="category">Category</label>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="form-floating mb-3">
+        <select
+          class="form-select"
+          id="levelID"
+          formControlName="levelID"
+          aria-label="Floating label select example"
+        >
+          <option selected>--no level selected--</option>
+          <option *ngFor="let level of levels" [value]="level.id">
+            {{ level.name }}
+          </option>
+        </select>
+        <label for="levelID">Select Level</label>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="hint"
+          id="hint"
+        />
+        <label for="hint">Hint</label>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="input-group mb-3">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="choices"
+            id="choices"
+          />
+          <label for="choices">Choices</label>
+        </div>
+
+        <button
+          type="button"
+          [disabled]="
+            questionForm$.controls['category'].value === 'WORD_PUZZLE' ||
+            questionForm$.controls['category'].value === 'MATH_GAME'
+          "
+          class="btn btn-dark btn-sm p-3"
+          (click)="addToChoices()"
+        >
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </div>
+
+      <div class="d-flex gap-1 flex-wrap w-100">
+        <div
+          class="bg-body-tertiary rounded d-flex gap-2 align-items-center justify-content-center p-1"
+          *ngFor="let choice of choices$"
+        >
+          <h6>{{ choice }}</h6>
+          <i
+            class="fa-regular fa-circle-xmark"
+            (click)="removeChoice(choice)"
+          ></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-floating mb-3">
+        <input
+          id="answer"
+          type="text"
+          class="form-control"
+          formControlName="answer"
+          [ngbTypeahead]="search"
+          (focus)="focus$.next($any($event).target.value)"
+          (click)="click$.next($any($event).target.value)"
+          #instance="ngbTypeahead"
+        />
+
+        <label for="answer">Answer</label>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="activeModal.close('Close click')"
+      >
+        Cancel
+      </button>
+      <button
+        class="btn btn-dark"
+        type="submit"
+        [disabled]="questionForm$.invalid"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,22 @@
+.image-box {
+  width: 150px;
+  height: 150px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9f9f9;
+}
+
+.image-box img {
+  object-fit: cover;
+}
+
+.image-box .btn-danger {
+  font-size: 12px;
+  padding: 2px 5px;
+  z-index: 1;
+}

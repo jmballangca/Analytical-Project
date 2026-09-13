@@ -1,0 +1,28 @@
+<div
+  class="container-fluid h-100 d-flex align-items-center justify-content-center"
+>
+  <div
+    class="container w-50 p-3 bg-white rounded-2 d-flex flex-column align-items-center justify-content-center"
+  >
+    <div class="d-flex gap-1 align-items-bottom justify-content-bottom p-3">
+      <img
+        [src]="admin$?.profile || '../../../../assets/images/profile.jpg'"
+        class="rounded-circle"
+        alt="Profile"
+        width="150px"
+        height="150px"
+      />
+    </div>
+
+    <h5>{{ admin$?.name ?? "No Admin" }}</h5>
+    <h6 class="text-muted">{{ admin$?.type }}</h6>
+    <div class="d-flex gap-3 p-3">
+      <button class="btn btn-md btn-outline-dark" (click)="editProfile()">
+        Edit Profile
+      </button>
+      <button class="btn btn-md btn-dark" (click)="changePassword()">
+        Change Password
+      </button>
+    </div>
+  </div>
+</div>

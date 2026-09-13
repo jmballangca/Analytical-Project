@@ -1,0 +1,45 @@
+<div class="container-fluid mt-3">
+  <div class="d-flex align-items-center justify-content-end">
+    <button class="btn btn-outline-dark" (click)="addLevel(quizID)">
+      Add Level
+    </button>
+  </div>
+  <table class="table">
+    <thead class="bg-dark">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Total Questions</th>
+        <th scope="col">Points per questions</th>
+        <th scope="col">Timer</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr *ngFor="let level of levels; let index = index; let last = last">
+        <th scope="row">{{ level.name }}</th>
+        <td>{{ level.questions }}</td>
+        <td>{{ level.points }}</td>
+
+        <td>{{ level.timer }} mins</td>
+        <td>
+          <div class="d-flex gap-2">
+            <button
+              class="btn btn-success btn-sm"
+              (click)="updateLevel(quizID, level)"
+            >
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <!-- Disable button if index is not the last index of levels -->
+            <button
+              class="btn btn-danger btn-sm"
+              [disabled]="!last"
+              (click)="deleteLevel(quizID, level)"
+            >
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,66 @@
+<div class="container-fluid vh-100 m-0 p-0">
+  <div class="nav-container" style="margin: 0; padding: 0; overflow: hidden">
+    <div class="navigation bg-dark">
+      <nav>
+        <div class="text-center">
+          <img
+            src="../../../assets/images/logo.jfif"
+            class="m-3 rounded-circle"
+            height="80px"
+            width="80px"
+          />
+        </div>
+        <ul>
+          <li routerLink="dashboard" routerLinkActive="active">
+            <a>
+              <i class="fa-solid fa-house me-3"></i>
+              Dashboard</a
+            >
+          </li>
+
+          <li routerLink="leaderboard" routerLinkActive="active">
+            <a>
+              <i class="fa-solid fa-trophy me-3"></i>
+              Leaderboard</a
+            >
+          </li>
+          <li routerLink="students" routerLinkActive="active">
+            <a>
+              <i class="fa-solid fa-users me-3"></i>
+              Students</a
+            >
+          </li>
+
+          <li routerLink="games" routerLinkActive="active">
+            <a>
+              <i class="fa-solid fa-dice me-3"></i>
+              Games</a
+            >
+          </li>
+          <li routerLink="submissions" routerLinkActive="active">
+            <a>
+              <i class="fa-solid fa-file-lines me-3"></i>
+              Submissions</a
+            >
+          </li>
+          <li routerLink="profile" routerLinkActive="active">
+            <a>
+              <i class="fa-solid fa-user me-3"></i>
+              Profile</a
+            >
+          </li>
+
+          <li routerLinkActive="active" (click)="logout()">
+            <a>
+              <i class="fa-solid fa-right-from-bracket me-3"></i>
+              Logout</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="overflow-auto" style="width: 100%">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

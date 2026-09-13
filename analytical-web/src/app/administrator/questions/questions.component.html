@@ -1,0 +1,169 @@
+<!-- <div class="container-fluid d-flex flex-column h-100 gap-3 p-3">
+  <div class="row">
+    <div class="col">
+      <div class="box">
+        <div class="d-flex gap-3 align-items-center">
+          <img
+            src="../../../assets/images/rebus.png"
+            width="50px"
+            height="50px"
+          />
+          <div class="">
+            <h6>
+              {{
+                questionsWithSettings$?.settings?.rebus_puzzle_ids?.length ?? 0
+              }}
+              Questions
+            </h6>
+            <p class="text-secondary">Rebus Puzzle</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="box">
+        <div class="d-flex gap-3 align-items-center">
+          <img
+            src="../../../assets/images/riddle.png"
+            width="50px"
+            height="50px"
+          />
+          <div class="">
+            <h6>
+              {{ questionsWithSettings$?.settings?.riddles_ids?.length ?? 0 }}
+              Questions
+            </h6>
+            <p class="text-secondary">Riddles</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="box">
+        <div class="d-flex gap-3 align-items-center">
+          <img
+            src="../../../assets/images/math.png"
+            width="50px"
+            height="50px"
+          />
+          <div class="">
+            <h6>
+              {{
+                questionsWithSettings$?.settings?.math_puzzle_ids?.length ?? 0
+              }}
+              Questions
+            </h6>
+            <p class="text-secondary">Math Logic</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="box">
+        <div class="d-flex gap-3 align-items-center">
+          <img
+            src="../../../assets/images/word.png"
+            width="60px"
+            height="60px"
+          />
+          <div class="">
+            <h6>
+              {{
+                questionsWithSettings$?.settings?.word_puzzle_ids?.length ?? 0
+              }}
+              Questions
+            </h6>
+            <p class="text-secondary">Word Puzzle</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row flex-grow-1">
+    <div class="col">
+      <div class="box d-flex flex-column gap-2">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="input-group w-50">
+            <input
+              type="text"
+              class="search-input w-100"
+              placeholder="Search questions..."
+            />
+          </div>
+          <button class="btn btn-dark" (click)="createQuestion()">
+            <i class="fa-solid fa-plus me-3"></i>
+            Create Questions
+          </button>
+        </div>
+        <div class="flex-grow-1">
+          <table class="table table-borderless table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Question</th>
+                <th scope="col">Choices</th>
+                <th scope="col">Answer</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let question of questions$">
+                <th scope="row">
+                  <div class="d-flex gap-3">
+                    <img
+                      [src]="question.image"
+                      alt="question image"
+                      class="me-2 rounded-2"
+                      style="width: 50px; height: 50px"
+                    />
+                    <h6>{{ question.question }}</h6>
+                  </div>
+                </th>
+                <td>
+                  {{ question.choices }}
+                </td>
+                <td>{{ question.answer }}</td>
+                <td>{{ question.createdAt.toLocaleDateString() }}</td>
+                <td>
+                  <div class="d-flex gap-2">
+                    <button class="btn btn-success">
+                      <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+
+                    <button
+                      class="btn btn-danger"
+                      (click)="deleteQuestion(question)"
+                    >
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="d-flex justify-content-between p-2">
+          <ngb-pagination
+            [collectionSize]="collectionSize"
+            [(page)]="page"
+            [pageSize]="pageSize"
+            (pageChange)="refreshQuestions()"
+          >
+          </ngb-pagination>
+
+          <select
+            class="form-select"
+            style="width: auto"
+            [(ngModel)]="pageSize"
+            (ngModelChange)="refreshQuestions()"
+          >
+            <option [ngValue]="10">10 items per page</option>
+            <option [ngValue]="20">20 items per page</option>
+            <option [ngValue]="30">30 items per page</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

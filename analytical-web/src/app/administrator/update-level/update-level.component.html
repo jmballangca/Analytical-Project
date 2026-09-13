@@ -1,0 +1,78 @@
+<div class="modal-header border-0">
+  <h5 class="modal-title">Create Level</h5>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss(null)"
+  ></button>
+</div>
+<div class="modal-body">
+  <form (submit)="onSubmit()" [formGroup]="levelForm$">
+    <div class="row">
+      <div class="col-6">
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="name"
+            formControlName="name"
+          />
+          <label for="name">Level</label>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-floating mb-3">
+          <input
+            type="number"
+            class="form-control"
+            id="points"
+            formControlName="points"
+          />
+          <label for="points">Points</label>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="form-floating mb-3">
+          <input
+            type="number"
+            class="form-control"
+            id="questions"
+            formControlName="questions"
+          />
+          <label for="questions">Total Questions</label>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-floating mb-3">
+          <input
+            type="number"
+            class="form-control"
+            id="timer"
+            formControlName="timer"
+          />
+          <label for="timer">Timer</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="activeModal.close(null)"
+      >
+        Cancel
+      </button>
+      <button
+        class="btn btn-dark"
+        type="submit"
+        [disabled]="levelForm$.invalid"
+      >
+        Update
+      </button>
+    </div>
+  </form>
+</div>

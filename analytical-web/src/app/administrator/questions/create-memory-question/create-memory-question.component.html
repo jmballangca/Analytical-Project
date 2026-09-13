@@ -1,0 +1,81 @@
+<div class="modal-header bg-dark">
+  <h5 class="modal-title text-light">Create Memory Questions</h5>
+</div>
+<div class="modal-body">
+  <form (submit)="submit()" [formGroup]="questionForm$" class="row g-3">
+    <div class="col-md-6">
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="category"
+          readonly
+          formControlName="category"
+        />
+        <label for="category">Category</label>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-floating mb-3">
+        <select
+          class="form-select"
+          id="levelID"
+          formControlName="levelID"
+          aria-label="Floating label select example"
+        >
+          <option selected>--no level selected--</option>
+          <option *ngFor="let level of levels" [value]="level.id">
+            {{ level.name }}
+          </option>
+        </select>
+        <label for="levelID">Select Level</label>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-floating mb-3">
+        <input
+          type="file"
+          class="form-control"
+          id="floatingInputGrid"
+          accept="image/*"
+          placeholder="Pick Image"
+          (change)="onFileSelect($event)"
+          multiple
+        />
+        <label for="floatingInputGrid">Pick Images</label>
+      </div>
+    </div>
+    <div class="row g-3">
+      <div class="col-4" *ngFor="let image of selectedImages; let i = index">
+        <div class="image-box position-relative">
+          <button
+            class="btn btn-danger btn-sm position-absolute top-0 end-0"
+            (click)="deleteImage(i)"
+            title="Remove Image"
+          >
+            &times;
+          </button>
+          <img
+            [src]="image"
+            class="img-fluid rounded"
+            alt="Preview"
+            width="150px"
+            height="150px"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 d-flex align-items-center justify-content-end">
+      <button
+        class="btn btn-dark"
+        type="submit"
+        [disabled]="
+          selectedImagesFilesForUpload.length < 2 || questionForm$.invalid
+        "
+      >
+        Save Question
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,95 @@
+<div class="container-fluid p-3 h-100">
+  <div class="row h-100 g-3">
+    <div class="col-4">
+      <div class="box border-start border-4 border-success">
+        <h5 class="title">{{ submissions.length }}</h5>
+        <span class="text-muted">Total Submissions</span>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="box border-start border-4 border-warning">
+        <h5 class="title">{{ countSubmissionsToday }}</h5>
+        <span class="text-muted">Today</span>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="box border-start border-4 border-danger">
+        <div class="d-flex gap-2">
+          <div>
+            <h5 class="title">{{ countSubmissionsLastWeek }}</h5>
+            <span class="text-muted">Last Week</span>
+          </div>
+          <i class="fa-solid fa-people-group"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 h-100">
+      <div class="box rounded-3 p-3 h-100">
+        <div class="d-flex align-items-center justify-content-between">
+          <h4>Submissions</h4>
+
+          <div class="box">
+            <div class="input-group" style="width: 400px">
+              <input
+                type="text"
+                class="form-control w-25"
+                class="search-input w-100"
+                placeholder="Search by student , game..."
+                [formControl]="searchControl"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid flex-grow-1 overflow-auto">
+          <table class="table table-borderless table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Student</th>
+                <th scope="col">Game</th>
+                <th scope="col">Level</th>
+                <th scope="col">Time</th>
+                <th scope="col">Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let submission of paginatedSubmissions; index as i">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>
+                  <img
+                    [src]="
+                      submission.students?.profile ||
+                      '../../../../assets/images/profile.jpg'
+                    "
+                    [alt]="submission.students?.fname"
+                    class="me-2 rounded-circle"
+                    style="width: 40px; height: 40px"
+                  />
+                  {{ displayFullname(submission.students) }}
+                </td>
+                <td>{{ submission.submission.quizInfo?.name }}</td>
+                <td>{{ submission.submission.quizInfo?.levels?.name }}</td>
+                <td>{{ submission.submission.performance.endTime }}</td>
+                <td>
+                  {{ submission.submission.performance.earning }} /
+                  {{
+                    (submission.submission.quizInfo?.levels?.questions || 0) *
+                      (submission.submission.quizInfo?.levels?.points || 0)
+                  }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <ngb-pagination
+          [collectionSize]="submissions.length"
+          [(page)]="currentPage"
+          [pageSize]="pageSize"
+          (pageChange)="onPageChange($event)"
+        >
+        </ngb-pagination>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,387 @@
+[
+  {
+    "question": "What has to be broken before you can use it?",
+    "answer": "An egg",
+    "choices": ["A lock", "An egg", "A promise", "A glass"]
+  },
+  {
+    "question": "I’m tall when I’m young, and I’m short when I’m old. What am I?",
+    "answer": "A candle",
+    "choices": ["A candle", "A shadow", "A tree", "A person"]
+  },
+  {
+    "question": "What month of the year has 28 days?",
+    "answer": "All of them",
+    "choices": ["December", "February", "January", "All of them"]
+  },
+  {
+    "question": "What is full of holes but still holds water?",
+    "answer": "A sponge",
+    "choices": ["A sponge", "A bucket", "A sieve", "A net"]
+  },
+  {
+    "question": "What question can you never answer yes to?",
+    "answer": "Are you asleep yet?",
+    "choices": [
+      "Do you like riddles?",
+      "Are you awake?",
+      "Are you asleep yet?",
+      "Is it raining?"
+    ]
+  },
+  {
+    "question": "What is always in front of you but can’t be seen?",
+    "answer": "The future",
+    "choices": ["A shadow", "The future", "Air", "The past"]
+  },
+  {
+    "question": "There’s a one-story house in which everything is yellow. Yellow walls, yellow doors, yellow furniture. What color are the stairs?",
+    "answer": "There aren’t any—it’s a one-story house.",
+    "choices": [
+      "Blue",
+      "Yellow",
+      "There aren’t any—it’s a one-story house.",
+      "White"
+    ]
+  },
+  {
+    "question": "What can you break, even if you never pick it up or touch it?",
+    "answer": "A promise",
+    "choices": ["A glass", "A heart", "A promise", "A rule"]
+  },
+  {
+    "question": "What goes up but never comes down?",
+    "answer": "Your age",
+    "choices": ["A plane", "A balloon", "A ladder", "Your age"]
+  },
+  {
+    "question": "A man who was outside in the rain without an umbrella or hat didn’t get a single hair on his head wet. Why?",
+    "answer": "He was bald.",
+    "choices": [
+      "He had a coat.",
+      "He used a towel.",
+      "He was bald.",
+      "He was quick."
+    ]
+  },
+  {
+    "question": "What has to be broken before you can use it?",
+    "answer": "An egg",
+    "choices": ["A glass", "An egg", "A promise", "A lock"]
+  },
+  {
+    "question": "I’m tall when I’m young, and I’m short when I’m old. What am I?",
+    "answer": "A candle",
+    "choices": ["A tree", "A candle", "A person", "A shadow"]
+  },
+  {
+    "question": "What month of the year has 28 days?",
+    "answer": "All of them",
+    "choices": ["February", "January", "All of them", "December"]
+  },
+  {
+    "question": "What is full of holes but still holds water?",
+    "answer": "A sponge",
+    "choices": ["A sponge", "A net", "A sieve", "A bucket"]
+  },
+  {
+    "question": "What question can you never answer yes to?",
+    "answer": "Are you asleep yet?",
+    "choices": [
+      "Is it raining?",
+      "Are you awake?",
+      "Are you asleep yet?",
+      "Do you like riddles?"
+    ]
+  },
+  {
+    "question": "What is always in front of you but can’t be seen?",
+    "answer": "The future",
+    "choices": ["The future", "Air", "The past", "A shadow"]
+  },
+  {
+    "question": "There’s a one-story house in which everything is yellow. Yellow walls, yellow doors, yellow furniture. What color are the stairs?",
+    "answer": "There aren’t any—it’s a one-story house.",
+    "choices": [
+      "There aren’t any—it’s a one-story house.",
+      "White",
+      "Yellow",
+      "Blue"
+    ]
+  },
+  {
+    "question": "What can you break, even if you never pick it up or touch it?",
+    "answer": "A promise",
+    "choices": ["A glass", "A rule", "A promise", "A heart"]
+  },
+  {
+    "question": "What goes up but never comes down?",
+    "answer": "Your age",
+    "choices": ["A ladder", "A balloon", "A plane", "Your age"]
+  },
+  {
+    "question": "A man who was outside in the rain without an umbrella or hat didn’t get a single hair on his head wet. Why?",
+    "answer": "He was bald.",
+    "choices": [
+      "He had a coat.",
+      "He was quick.",
+      "He used a towel.",
+      "He was bald."
+    ]
+  },
+  {
+    "question": "What gets wet while drying?",
+    "answer": "A towel",
+    "choices": ["A towel", "A sponge", "A cloth", "A dish"]
+  },
+  {
+    "question": "What can you keep after giving to someone?",
+    "answer": "Your word",
+    "choices": ["A secret", "A gift", "Your word", "A promise"]
+  },
+  {
+    "question": "I shave every day, but my beard stays the same. What am I?",
+    "answer": "A barber",
+    "choices": ["A barber", "A mirror", "A statue", "A mannequin"]
+  },
+  {
+    "question": "You see a boat filled with people, yet there isn’t a single person on board. How is that possible?",
+    "answer": "All the people on the boat are married.",
+    "choices": [
+      "The boat is sinking.",
+      "All the people on the boat are married.",
+      "The boat is empty.",
+      "The boat is in a painting."
+    ]
+  },
+  {
+    "question": "You walk into a room that contains a match, a kerosene lamp, a candle and a fireplace. What would you light first?",
+    "answer": "The match",
+    "choices": ["The match", "The candle", "The fireplace", "The lamp"]
+  },
+  {
+    "question": "A man dies of old age on his 25th birthday. How is this possible?",
+    "answer": "He was born on February 29.",
+    "choices": [
+      "He was born on February 29.",
+      "He was born in a leap year.",
+      "He traveled through time.",
+      "He lied about his age."
+    ]
+  },
+  {
+    "question": "I have branches, but no fruit, trunk or leaves. What am I?",
+    "answer": "A bank",
+    "choices": ["A bank", "A library", "A river", "A government"]
+  },
+  {
+    "question": "What can’t talk but will reply when spoken to?",
+    "answer": "An echo",
+    "choices": ["An echo", "A radio", "A mirror", "A shadow"]
+  },
+  {
+    "question": "The more of this there is, the less you see. What is it?",
+    "answer": "Darkness",
+    "choices": ["Darkness", "Fog", "Mist", "Light"]
+  },
+  {
+    "question": "What has to be broken before you can use it?",
+    "answer": "An egg",
+    "choices": ["A glass", "An egg", "A promise", "A lock"]
+  },
+  {
+    "question": "I’m tall when I’m young, and I’m short when I’m old. What am I?",
+    "answer": "A candle",
+    "choices": ["A tree", "A candle", "A person", "A shadow"]
+  },
+  {
+    "question": "What month of the year has 28 days?",
+    "answer": "All of them",
+    "choices": ["February", "January", "All of them", "December"]
+  },
+  {
+    "question": "What is full of holes but still holds water?",
+    "answer": "A sponge",
+    "choices": ["A sponge", "A net", "A sieve", "A bucket"]
+  },
+  {
+    "question": "What question can you never answer yes to?",
+    "answer": "Are you asleep yet?",
+    "choices": [
+      "Is it raining?",
+      "Are you awake?",
+      "Are you asleep yet?",
+      "Do you like riddles?"
+    ]
+  },
+  {
+    "question": "What is always in front of you but can’t be seen?",
+    "answer": "The future",
+    "choices": ["The future", "Air", "The past", "A shadow"]
+  },
+  {
+    "question": "There’s a one-story house in which everything is yellow. Yellow walls, yellow doors, yellow furniture. What color are the stairs?",
+    "answer": "There aren’t any—it’s a one-story house.",
+    "choices": [
+      "There aren’t any—it’s a one-story house.",
+      "White",
+      "Yellow",
+      "Blue"
+    ]
+  },
+  {
+    "question": "What can you break, even if you never pick it up or touch it?",
+    "answer": "A promise",
+    "choices": ["A glass", "A rule", "A promise", "A heart"]
+  },
+  {
+    "question": "What goes up but never comes down?",
+    "answer": "Your age",
+    "choices": ["A ladder", "A balloon", "A plane", "Your age"]
+  },
+  {
+    "question": "A man who was outside in the rain without an umbrella or hat didn’t get a single hair on his head wet. Why?",
+    "answer": "He was bald.",
+    "choices": [
+      "He had a coat.",
+      "He was quick.",
+      "He used a towel.",
+      "He was bald."
+    ]
+  },
+  {
+    "question": "What gets wet while drying?",
+    "answer": "A towel",
+    "choices": ["A towel", "A sponge", "A cloth", "A dish"]
+  },
+  {
+    "question": "What can you keep after giving to someone?",
+    "answer": "Your word",
+    "choices": ["A secret", "A gift", "Your word", "A promise"]
+  },
+  {
+    "question": "I shave every day, but my beard stays the same. What am I?",
+    "answer": "A barber",
+    "choices": ["A barber", "A mirror", "A statue", "A mannequin"]
+  },
+  {
+    "question": "You see a boat filled with people, yet there isn’t a single person on board. How is that possible?",
+    "answer": "All the people on the boat are married.",
+    "choices": [
+      "The boat is sinking.",
+      "All the people on the boat are married.",
+      "The boat is empty.",
+      "The boat is in a painting."
+    ]
+  },
+  {
+    "question": "You walk into a room that contains a match, a kerosene lamp, a candle and a fireplace. What would you light first?",
+    "answer": "The match",
+    "choices": ["The match", "The candle", "The fireplace", "The lamp"]
+  },
+  {
+    "question": "A man dies of old age on his 25th birthday. How is this possible?",
+    "answer": "He was born on February 29.",
+    "choices": [
+      "He was born on February 29.",
+      "He was born in a leap year.",
+      "He traveled through time.",
+      "He lied about his age."
+    ]
+  },
+  {
+    "question": "I have branches, but no fruit, trunk or leaves. What am I?",
+    "answer": "A bank",
+    "choices": ["A bank", "A library", "A river", "A government"]
+  },
+  {
+    "question": "What can’t talk but will reply when spoken to?",
+    "answer": "An echo",
+    "choices": ["An echo", "A radio", "A mirror", "A shadow"]
+  },
+  {
+    "question": "The more of this there is, the less you see. What is it?",
+    "answer": "Darkness",
+    "choices": ["Darkness", "Fog", "Mist", "Light"]
+  },
+  {
+    "question": "David’s parents have three sons: Snap, Crackle, and what’s the name of the third son?",
+    "answer": "David",
+    "choices": ["Crackle", "David", "Pop", "Snap"]
+  },
+  {
+    "question": "I follow you all the time and copy your every move, but you can’t touch me or catch me. What am I?",
+    "answer": "Your shadow",
+    "choices": ["Your shadow", "A reflection", "A twin", "A ghost"]
+  },
+  {
+    "question": "What has many keys but can’t open a single lock?",
+    "answer": "A piano",
+    "choices": ["A piano", "A map", "A computer", "A keyboard"]
+  },
+  {
+    "question": "What can you hold in your left hand but not in your right?",
+    "answer": "Your right elbow",
+    "choices": [
+      "Your left thumb",
+      "Your right knee",
+      "Your right elbow",
+      "Your right hand"
+    ]
+  },
+  {
+    "question": "What is black when it’s clean and white when it’s dirty?",
+    "answer": "A chalkboard",
+    "choices": ["A chalkboard", "A blackboard", "A whiteboard", "A mirror"]
+  },
+  {
+    "question": "What gets bigger when more is taken away?",
+    "answer": "A hole",
+    "choices": ["A hole", "A debt", "A shadow", "A space"]
+  },
+  {
+    "question": "I’m light as a feather, yet the strongest person can’t hold me for five minutes. What am I?",
+    "answer": "Your breath",
+    "choices": ["Your breath", "A thought", "A bubble", "A whisper"]
+  },
+  {
+    "question": "I’m found in socks, scarves and mittens; and often in the paws of playful kittens. What am I?",
+    "answer": "Yarn",
+    "choices": ["Yarn", "String", "Wool", "Thread"]
+  },
+  {
+    "question": "Where does today come before yesterday?",
+    "answer": "The dictionary",
+    "choices": ["The dictionary", "A calendar", "A clock", "A timeline"]
+  },
+  {
+    "question": "What invention lets you look right through a wall?",
+    "answer": "A window",
+    "choices": ["A window", "A door", "A peephole", "A mirror"]
+  },
+  {
+    "question": "If you’ve got me, you want to share me; if you share me, you haven’t kept me. What am I?",
+    "answer": "A secret",
+    "choices": ["A secret", "A joke", "A promise", "A gift"]
+  },
+  {
+    "question": "What can’t be put in a saucepan?",
+    "answer": "Its lid",
+    "choices": ["Its lid", "Water", "A handle", "Food"]
+  },
+  {
+    "question": "What goes up and down but doesn’t move?",
+    "answer": "A staircase",
+    "choices": ["A staircase", "An elevator", "A road", "A hill"]
+  },
+  {
+    "question": "If you’re running in a race and you pass the person in second place, what place are you in?",
+    "answer": "Second place",
+    "choices": ["First place", "Second place", "Third place", "Fourth place"]
+  },
+  {
+    "question": "It belongs to you, but other people use it more than you do. What is it?",
+    "answer": "Your name",
+    "choices": ["Your name", "Your phone", "Your time", "Your clothes"]
+  }
+]

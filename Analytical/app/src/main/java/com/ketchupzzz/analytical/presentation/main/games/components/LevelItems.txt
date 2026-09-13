@@ -1,0 +1,108 @@
+
+
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun LevelItems(
+    quiz: Quiz,
+    levelsWithSubmissions: LevelsWithSubmissions,
+    nextLevel : Levels ? = null,
+    modifier: Modifier = Modifier,
+    currentLevel: Int = 1,
+    state: GameState,
+    e : (GameEvents) -> Unit,
+    navHostController: NavHostController
+) {
+    val levels = levelsWithSubmissions.levels
+    val myLevel: Int = levels.name.last().digitToInt()
+
+    val sheetState = rememberModalBottomSheetState()
+    val scope = rememberCoroutineScope()
+    var showBottomSheet by remember { mutableStateOf(false) }
+
+    if (showBottomSheet) {
+        StartGame(
+            levels = levels,
+            sheetState = sheetState,
+            onDismiss = { showBottomSheet = false },
+            onHide = {
+                scope.launch { sheetState.hide() }.invokeOnCompletion {
+                    if (!sheetState.isVisible) {
+                        showBottomSheet = false
+                    }
+                }
+            },
+            state = state,
+            e =e ,
+            onStart = {
+                navHostController.navigate(AppRouter.GamingScreen.createRoute(
+                    QuizAndLevel(quiz = quiz, level = levels , nextLevels = nextLevel)
+                ))
+                showBottomSheet = false
+            }
+        )
+    }
+    OutlinedCard(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(4.dp)
+            .clickable {
+                if (myLevel  <= currentLevel) {
+                    showBottomSheet = true
+                }
+            }
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    if (myLevel > currentLevel)
+                        Color.Black.copy(alpha = 0.3f)
+                    else MaterialTheme.colorScheme.surface
+                )
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = "${levels.name.last()}",
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Text(
+                    text = levels.name.dropLast(2),
+                    style = MaterialTheme.typography.titleSmall
+                )
+                Spacer(modifier = modifier.height(4.dp))
+
+                val rating: Double = if (levelsWithSubmissions.submissions.isNotEmpty()) {
+                    levelsWithSubmissions.submissions.sortedByDescending { it.performance.earning }[0].performance.earning
+                } else {
+                    0.00
+                }
+
+                RatingBar(
+                    rating = rating,
+                    onRatingChanged = {  },
+                    starSize = 16.dp,
+                    stars = 3,
+                    maxRating = (levels.points * levels.questions).toDouble()
+                )
+            }
+
+            if (myLevel > currentLevel) {
+                Icon(
+                    imageVector = Icons.Rounded.Lock,
+                    contentDescription = "Lock",
+                    tint = Color.White,
+                    modifier = modifier.size(48.dp)
+                )
+            }
+        }
+    }
+}

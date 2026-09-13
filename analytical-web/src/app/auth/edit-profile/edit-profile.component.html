@@ -1,0 +1,33 @@
+<div class="modal-header border-0">
+  <h5 class="modal-title">Edit Profile</h5>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss(null)"
+  ></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="nameForm$" (ngSubmit)="onSubmit()" class="form-floating">
+    <input
+      type="text"
+      class="form-control"
+      id="name"
+      placeholder="ex. Juan Dela Cruz"
+      formControlName="name"
+    />
+    <label for="name">Enter fullname</label>
+  </form>
+</div>
+<div class="modal-footer border-0">
+  <button type="button" class="btn btn-primary" (click)="onSubmit()">
+    Save changes
+  </button>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="activeModal.dismiss(null)"
+  >
+    Cancel
+  </button>
+</div>

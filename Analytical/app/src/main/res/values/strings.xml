@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Analytical</string>
+    <string name="login">Log in</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="not_a_member_yet">"Not a member yet ? "</string>
+    <string name="to_your_account">to your account</string>
+    <string name="s">" to your account"</string>
+</resources>

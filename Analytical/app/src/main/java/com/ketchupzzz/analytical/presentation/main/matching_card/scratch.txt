@@ -1,0 +1,577 @@
+package com.ketchupzzz.analytical.presentation.main.matching_card
+
+import android.annotation.SuppressLint
+import android.service.autofill.FieldClassification.Match
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.navigation.NavHostController
+import com.ketchupzzz.analytical.R
+import com.ketchupzzz.analytical.models.quiz.Levels
+import com.ketchupzzz.analytical.presentation.main.crossmath.CrossMathEvents
+import com.ketchupzzz.analytical.presentation.main.crossmath.CrossMathState
+import com.ketchupzzz.analytical.presentation.main.games.data.QuizAndLevel
+import com.ketchupzzz.analytical.presentation.main.gaming.BackpressHandler
+import com.ketchupzzz.analytical.presentation.main.gaming.GamingEvents
+import com.ketchupzzz.analytical.presentation.main.gaming.GamingState
+import com.ketchupzzz.analytical.presentation.main.gaming.GamingTopBar
+import com.ketchupzzz.analytical.presentation.main.gaming.components.FinishDialog
+import com.ketchupzzz.analytical.presentation.main.gaming.components.TimeoutDialog
+import com.ketchupzzz.analytical.presentation.navigation.AppRouter
+import com.ketchupzzz.analytical.utils.RatingBar
+import com.ketchupzzz.analytical.utils.UnknownError
+import com.ketchupzzz.analytical.utils.getEarnings
+import com.ketchupzzz.analytical.utils.getEndMinute
+import kotlinx.coroutines.delay
+
+data class MatchingCard(
+    val isFront : Boolean,
+    val choice : String ,
+    val globalIndex : Int
+)
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@Composable
+fun MatchingCardScreen(
+    modifier: Modifier = Modifier,
+    args : QuizAndLevel,
+    state: MatchingCardState,
+    events: (MatchingCardEvents) -> Unit,
+    navHostController: NavHostController
+) {
+    val quiz = args.quiz
+    val level =args.level
+    val nextLevel = args.nextLevels
+    val context = LocalContext.current
+    LaunchedEffect(quiz) {
+        events(MatchingCardEvents.OnGetQuestions(quiz.id!!,level.id,level.questions,level.timer))
+    }
+    var finishDialog by remember {
+        mutableStateOf(false)
+    }
+
+    var outOfTimeDialog by remember {
+        mutableStateOf(false)
+    }
+    val pageState = rememberPagerState(initialPage = 0) { level.questions }
+    val scope = rememberCoroutineScope()
+
+    LaunchedEffect(state.timer) {
+        if (state.timer == 0) {
+            events(
+                MatchingCardEvents.OnSubmit(
+                level = level,
+                quiz = quiz,
+                context = context
+            ))
+            outOfTimeDialog = true
+        }
+    }
+
+    if (outOfTimeDialog) {
+        MatchingCardTimeOut(
+            state = state,
+            events = events,
+            onBack = {
+                outOfTimeDialog = false
+                navHostController.popBackStack()
+            },
+            onRestart = {
+                navHostController.navigate(
+                    AppRouter.GamingScreen.createRoute(QuizAndLevel(
+                        quiz = quiz,
+                        level = level ,
+                        nextLevels = args.nextLevels
+                    )
+                    ))
+            },
+            onNext = {
+            },
+            levels = level,
+            onDismissRequest = {
+                outOfTimeDialog = false
+                navHostController.popBackStack()
+            }
+        )
+    }
+    if (finishDialog) {
+        MatchingCardFinish(
+            levels = level,
+            state = state,
+            events = events,
+            onDismissRequest = {
+                finishDialog = false
+                navHostController.popBackStack()
+            },
+            onNext = { },
+            onRestart = {   navHostController.navigate(
+                AppRouter.GamingScreen.createRoute(QuizAndLevel(
+                    quiz = quiz,
+                    level = level ,
+                    nextLevels = nextLevel
+                )
+                )) },
+            onBack = {
+                finishDialog = false
+                navHostController.popBackStack()
+            })
+    }
+    BackpressHandler(navHostController = navHostController, onBackPress = {events(MatchingCardEvents.OnExitGame(navHostController))})
+
+    Scaffold(
+        containerColor = MaterialTheme.colorScheme.surface,
+        contentColor = MaterialTheme.colorScheme.onSurface,
+        topBar = {
+            if (state.questions.isNotEmpty() && state.questions.size == level.questions) {
+                MatchinCardTopBar(
+                    level = level,
+                    index = pageState.currentPage + 1,
+                    s = state,
+                    e = events,
+                    stop = finishDialog
+                )
+            }
+        }
+    ) {
+        if (state.isLoading) {
+            LinearProgressIndicator()
+        } else {
+            if (state.questions.isNotEmpty()) {
+
+                HorizontalPager(
+                    pageState,
+                    modifier = modifier
+                        .fillMaxSize()
+                        .padding(it)
+                ) {
+                    val duplicatedChoices = state.questions[it].choices + state.questions[it].choices
+                    val shuffledChoices = remember { duplicatedChoices.shuffled().mapIndexed { index, choice ->
+                        MatchingCard(isFront = false, choice = choice, globalIndex = index)
+                    }}
+                    val rowSize = state.questions[it].choices.size
+                    CardLayout(
+                        choices = shuffledChoices,
+                        secondSelected = { card ,index ->
+                            events(MatchingCardEvents.OnSelectSecond(card,index))
+                        },
+                        rowSize = rowSize,
+                        firstSelected = {card,index->
+                            events(MatchingCardEvents.OnSelectFirst(card,index))
+                        }
+                    )
+                }
+            } else {
+                UnknownError(title = "No Questions yet!") {
+                    Button(onClick = { navHostController.popBackStack() }) {
+                        Text("Back")
+                    }
+                }
+            }
+
+        }
+
+    }
+}
+
+@Composable
+fun CardLayout(
+    modifier: Modifier = Modifier,
+    choices: List<MatchingCard>,
+    rowSize: Int,
+    firstSelected: (MatchingCard, Int) -> Unit,
+    secondSelected: (MatchingCard, Int) -> Unit
+) {
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier.wrapContentSize(),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            choices.chunked(rowSize).forEachIndexed { chunkIndex, rowChoices ->
+                Row(
+                    modifier = Modifier.wrapContentSize(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    rowChoices.forEachIndexed { rowIndex, card ->
+                        CardFlip(
+                            isFront = card.isFront,
+                            frontImage = card.choice,
+                            onFlip = { isFront ->
+                                if (!isFront) {
+                                    if (choices.count { it.isFront } % 2 == 0) {
+                                        firstSelected(card, card.globalIndex)
+                                    } else {
+                                        secondSelected(card, card.globalIndex)
+                                    }
+                                }
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+@SuppressLint("DefaultLocale")
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MatchinCardTopBar(
+    level : Levels,
+    index : Int,
+    s: MatchingCardState,
+    e : (MatchingCardEvents) -> Unit,
+    modifier: Modifier = Modifier,
+    stop : Boolean = false
+) {
+    var timer = s.timer
+
+    LaunchedEffect(timer) {
+        while (timer > 0 && !stop) {
+            delay(1000L)
+            timer--
+            e(MatchingCardEvents.OnUpdateTimer(timer))
+        }
+    }
+    val minutes = timer / 60
+    val seconds = timer % 60
+    val clock = String.format("%02d:%02d", minutes, seconds)
+
+    TopAppBar(
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            titleContentColor = MaterialTheme.colorScheme.onSurface,
+            navigationIconContentColor = MaterialTheme.colorScheme.onSurface
+        ),
+        title = {
+            Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                val style = MaterialTheme.typography.titleMedium
+                Text(text = level.name, style = style, fontWeight = FontWeight.Bold)
+                Text(text = "$index / ${level.questions}", style = style , fontWeight = FontWeight.Bold)
+                Box(modifier = modifier
+                    .wrapContentSize()
+                    .padding(8.dp)
+                    .background(
+                        color = MaterialTheme.colorScheme.primary,
+                        shape = RoundedCornerShape(8.dp)
+                    ),
+                ) {
+                    Text(text = "${clock}",
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        fontWeight = FontWeight.Light,
+                        modifier = modifier.padding(8.dp)
+                    )
+                }
+            }
+        })
+
+}
+
+
+
+@Composable
+fun MatchingCardFinish(
+    modifier: Modifier = Modifier,
+    levels: Levels,
+    state : MatchingCardState,
+    events: (MatchingCardEvents) -> Unit,
+    onDismissRequest: () -> Unit,
+    onNext : () -> Unit,
+    onRestart : () -> Unit,
+    onBack : () -> Unit
+) {
+    val score = state.answerSheet.getEarnings()
+    val time = state.timer.getEndMinute()
+    val max = levels.points * levels.questions
+    Dialog(onDismissRequest = { onDismissRequest() }) {
+        Box(
+            modifier = modifier
+                .height(480.dp)
+                .fillMaxWidth()
+        ) {
+            Image(
+                modifier = modifier.fillMaxSize(),
+                painter = painterResource(id = R.drawable.complete),
+                contentDescription = "Test"
+            )
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 52.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Bottom
+            ) {
+                RatingBar(
+                    rating = state.answerSheet.getEarnings(),
+                    onRatingChanged ={},
+                    stars = 3,
+                    maxRating =  max.toDouble(),
+                    starSize = 50.dp
+                )
+                Row(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Column(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            "Points",
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                        )
+
+                        Text(
+                            score.toString(),
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                        )
+                    }
+                    Column(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            "Time",
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                        )
+                        Text(
+                            time,
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                        )
+                    }
+                }
+
+                Row(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Image(
+                        modifier = modifier
+                            .height(42.dp)
+                            .clickable {
+                                onBack()
+                            },
+                        painter = painterResource(id = R.drawable.back),
+                        contentDescription = "Back"
+                    )
+                    Spacer(modifier = modifier.width(12.dp))
+                    Image(
+                        modifier = modifier
+                            .height(42.dp)
+                            .clickable {
+                                onRestart()
+                            },
+                        painter = painterResource(id = R.drawable.retry),
+                        contentDescription = "Restart"
+                    )
+                }
+            }
+        }
+    }
+}
+@Composable
+fun MatchingCardTimeOut(
+    modifier: Modifier = Modifier,
+    levels: Levels,
+    state : MatchingCardState,
+    events: (MatchingCardEvents) -> Unit,
+    onDismissRequest: () -> Unit,
+    onNext : () -> Unit,
+    onRestart : () -> Unit,
+    onBack : () -> Unit
+) {
+    val score = state.answerSheet.getEarnings()
+    val time = state.timer.getEndMinute()
+    val max = levels.points * levels.questions
+    Dialog(onDismissRequest = { onDismissRequest() }) {
+        Box(
+            modifier = modifier
+                .height(480.dp)
+                .fillMaxWidth()
+        ) {
+            Image(
+                modifier = modifier.fillMaxSize(),
+                painter = painterResource(id = R.drawable.failed),
+                contentDescription = "Test"
+            )
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 52.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Bottom
+            ) {
+                RatingBar(
+                    rating = state.answerSheet.getEarnings(),
+                    onRatingChanged ={},
+                    stars = 3,
+                    maxRating =  max.toDouble(),
+                    starSize = 50.dp
+                )
+                Row(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Column(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            "Points",
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                        )
+
+                        Text(
+                            score.toString(),
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                        )
+                    }
+                    Column(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            "Time",
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                        )
+                        Text(
+                            time,
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                        )
+                    }
+                }
+
+                Row(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Image(
+                        modifier = modifier
+                            .height(42.dp)
+                            .clickable {
+                                onBack()
+                            },
+                        painter = painterResource(id = R.drawable.back),
+                        contentDescription = "Back"
+                    )
+                    Spacer(modifier = modifier.width(12.dp))
+                    Image(
+                        modifier = modifier
+                            .height(42.dp)
+                            .clickable {
+                                onRestart()
+                            },
+                        painter = painterResource(id = R.drawable.retry),
+                        contentDescription = "Restart"
+                    )
+                }
+            }
+        }
+    }
+}

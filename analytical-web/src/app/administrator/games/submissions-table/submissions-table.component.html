@@ -1,0 +1,53 @@
+<div class="container-fluid p-3 h-100">
+  <div class="box rounded-3 p-3 h-100">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <h4>Submissions</h4>
+    </div>
+    <table class="table table-borderless table-hover flex-grow-1 overflow-auto">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Student</th>
+          <th scope="col">Game</th>
+          <th scope="col">Level</th>
+          <th scope="col">Time</th>
+          <th scope="col">Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let submission of paginatedSubmissions; index as i">
+          <th scope="row">{{ (currentPage - 1) * pageSize + i + 1 }}</th>
+          <td>
+            <img
+              [src]="
+                submission.students?.profile ||
+                '../../../../assets/images/profile.jpg'
+              "
+              [alt]="submission.students?.fname"
+              class="me-2"
+              style="width: 20px"
+            />
+            {{ displayFullname(submission.students) }}
+          </td>
+          <td>{{ submission.submission.quizInfo?.name }}</td>
+          <td>{{ submission.submission.quizInfo?.levels?.name }}</td>
+          <td>{{ submission.submission.performance.endTime }}</td>
+          <td>
+            {{ submission.submission.performance.earning }} /
+            {{
+              (submission.submission.quizInfo?.levels?.questions || 0) *
+                (submission.submission.quizInfo?.levels?.points || 0)
+            }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ngb-pagination
+      [collectionSize]="submissions.length"
+      [(page)]="currentPage"
+      [pageSize]="pageSize"
+      (pageChange)="onPageChange($event)"
+    >
+    </ngb-pagination>
+  </div>
+</div>

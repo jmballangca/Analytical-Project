@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "191631392649",
+    "project_id": "analytical-e2dbb",
+    "storage_bucket": "analytical-e2dbb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191631392649:android:7d2802ef8960c7cad6ab58",
+        "android_client_info": {
+          "package_name": "com.ketchupzzz.analytical"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7BaImKV3piRrOGh2zGkxVthWxkQ1v9C0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

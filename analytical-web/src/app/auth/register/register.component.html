@@ -1,0 +1,148 @@
+<div
+  class="container-fluid vh-100 d-flex align-items-center justify-content-center"
+>
+  <div class="card bg-white w-75 h-75 rounded-3">
+    <div class="d-flex align-items-stretch h-100">
+      <div
+        class="hero flex-grow-1 d-flex flex-column align-items-center justify-content-center"
+      >
+        <img
+          src="../../../../assets/images/logo2.jpg"
+          width="300px"
+          height="300px"
+          class="rounded-circle"
+        />
+      </div>
+      <div
+        class="login-form flex-grow-1 d-flex flex-column align-items-center justify-content-center p-3 gap-3"
+      >
+        <h1>Register</h1>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="w-100">
+          <div class="mb-3 form-floating">
+            <input
+              id="name"
+              formControlName="name"
+              type="text"
+              class="form-control"
+              placeholder="Enter your name"
+            />
+            <label for="name">Name</label>
+            <div
+              *ngIf="
+                registerForm.get('name')?.invalid &&
+                registerForm.get('name')?.touched
+              "
+            >
+              <small
+                *ngIf="registerForm.get('name')?.hasError('required')"
+                class="text-danger"
+                >Name is required</small
+              >
+              <small
+                *ngIf="registerForm.get('name')?.hasError('minlength')"
+                class="text-danger"
+                >Name should be at least 3 characters long</small
+              >
+            </div>
+          </div>
+
+          <div class="mb-3 form-floating">
+            <input
+              id="email"
+              formControlName="email"
+              type="email"
+              class="form-control"
+              placeholder="Enter your email"
+            />
+            <label for="email">Email</label>
+            <div
+              *ngIf="
+                registerForm.get('email')?.invalid &&
+                registerForm.get('email')?.touched
+              "
+            >
+              <small
+                *ngIf="registerForm.get('email')?.hasError('required')"
+                class="text-danger"
+                >Email is required</small
+              >
+              <small
+                *ngIf="registerForm.get('email')?.hasError('email')"
+                class="text-danger"
+                >Please enter a valid email</small
+              >
+            </div>
+          </div>
+
+          <div class="mb-3 form-floating">
+            <input
+              id="password"
+              formControlName="password"
+              type="password"
+              class="form-control"
+              placeholder="Enter your password"
+            />
+            <label for="password">Password</label>
+            <div
+              *ngIf="
+                registerForm.get('password')?.invalid &&
+                registerForm.get('password')?.touched
+              "
+            >
+              <small
+                *ngIf="registerForm.get('password')?.hasError('required')"
+                class="text-danger"
+                >Password is required</small
+              >
+              <small
+                *ngIf="registerForm.get('password')?.hasError('minlength')"
+                class="text-danger"
+                >Password should be at least 6 characters long</small
+              >
+            </div>
+          </div>
+
+          <div class="mb-3 form-floating">
+            <input
+              id="confirmPassword"
+              formControlName="confirmPassword"
+              type="password"
+              class="form-control"
+              placeholder="Confirm your password"
+            />
+            <label for="confirmPassword">Confirm Password</label>
+            <div
+              *ngIf="
+                registerForm.get('confirmPassword')?.invalid &&
+                registerForm.get('confirmPassword')?.touched
+              "
+            >
+              <small
+                *ngIf="
+                  registerForm.get('confirmPassword')?.hasError('misMatch')
+                "
+                class="text-danger"
+                >Passwords do not match</small
+              >
+              <small
+                *ngIf="
+                  registerForm.get('confirmPassword')?.hasError('required')
+                "
+                class="text-danger"
+                >Confirm Password is required</small
+              >
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="isLoading || registerForm.invalid"
+          >
+            {{ isLoading ? "Registering..." : "Register" }}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+<div
+  class="container-fluid p-3"
+  style="min-height: 100%"
+  *ngIf="quiz$ | async as quiz"
+>
+  <div
+    class="h-100 bg-white overflow-hidden p-3 rounded-3"
+    *ngIf="levels$ | async as levels"
+  >
+    <div class="d-flex align-items-center justify-content-between p-3">
+      <h5>{{ quiz.title }}</h5>
+      <div class="d-flex gap-3">
+        <button class="btn btn-success" [disabled]="quiz.visible">
+          <i class="fa-solid fa-pen-to-square me-3"></i>
+          Edit
+        </button>
+
+        <button
+          class="btn btn-danger"
+          [disabled]="quiz.visible"
+          (click)="deleteQuiz(quiz)"
+        >
+          <i class="fa-solid fa-trash me-3"></i>
+          Delete
+        </button>
+      </div>
+    </div>
+    <ul ngbNav #nav="ngbNav" class="nav-underline">
+      <li ngbNavItem>
+        <button ngbNavLink>Overview</button>
+        <ng-template ngbNavContent>
+          <div class="d-flex gap-3">
+            <div class="flex-fill">
+              <div class="ratio ratio-16x9">
+                <img
+                  [src]="quiz.cover_photo"
+                  width="100%"
+                  height="100%"
+                  class="rounded"
+                  [alt]="quiz.title"
+                />
+              </div>
+            </div>
+            <div class="flex-fill">
+              <div class="d-flex flex-column">
+                <h4>{{ quiz.title }}</h4>
+                <p class="text-muted">
+                  {{ quiz.createdAt.toLocaleDateString() }}
+                </p>
+                <p class="text-muted">{{ quiz.desc }}</p>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+      <li ngbNavItem>
+        <button ngbNavLink>Levels</button>
+        <ng-template ngbNavContent>
+          <app-levels-table [quizID]="quiz.id" [levels]="levels" />
+        </ng-template>
+      </li>
+      <li ngbNavItem>
+        <button ngbNavLink>Questions</button>
+
+        <ng-template ngbNavContent>
+          <app-questions-table [game]="quiz" [levels]="levels" />
+        </ng-template>
+      </li>
+
+      <li ngbNavItem>
+        <button ngbNavLink>Submissions</button>
+        <ng-template
+          ngbNavContent
+          *ngIf="submissionsWithStudent$ | async as submissions"
+        >
+          <app-submissions-table
+            [submissions]="submissions"
+          ></app-submissions-table>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="nav" class="h-100 overflow-auto p-3"></div>
+  </div>
+</div>

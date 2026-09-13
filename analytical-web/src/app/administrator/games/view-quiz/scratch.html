@@ -1,0 +1,130 @@
+<div class="container-fluid p-3" style="min-height: 100%">
+  <ng-container *ngIf="quiz$ | async as quiz; else noQuiz">
+    <div class="box h-100">
+      <div class="d-flex align-items-center justify-content-end gap-3">
+        <button class="btn btn-success" [disabled]="quiz.visible">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </button>
+
+        <button
+          class="btn btn-danger"
+          [disabled]="quiz.visible"
+          (click)="deleteQuiz(quiz)"
+        >
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
+      <div class="d-flex gap-3">
+        <div class="flex-fill">
+          <div class="ratio ratio-16x9">
+            <img
+              [src]="quiz.cover_photo"
+              width="100%"
+              height="100%"
+              class="rounded"
+              [alt]="quiz.title"
+            />
+          </div>
+        </div>
+        <div class="flex-fill">
+          <div class="d-flex flex-column">
+            <h4>{{ quiz.title }}</h4>
+            <p class="text-muted">{{ quiz.createdAt.toLocaleDateString() }}</p>
+            <p class="text-muted">{{ quiz.desc }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- tabs -->
+      <div class="container-fluid mt-3" *ngIf="levels$ | async as levels">
+        <ul ngbNav #nav="ngbNav" class="nav-pills">
+          <li ngbNavItem>
+            <button ngbNavLink>Levels</button>
+            <ng-template ngbNavContent>
+              <app-levels-table [quizID]="quiz.id" [levels]="levels" />
+            </ng-template>
+          </li>
+          <li ngbNavItem>
+            <button ngbNavLink>Submissions</button>
+            <ng-template
+              ngbNavContent
+              *ngIf="submissionsWithStudent$ | async as submissions"
+            >
+              <app-submissions-table
+                [submissions]="submissions"
+              ></app-submissions-table>
+            </ng-template>
+          </li>
+          <li ngbNavItem>
+            <button ngbNavLink>Questions</button>
+            <ng-template ngbNavContent>
+              <div
+                class="d-flex p-3 align-items-center justify-content-between"
+              >
+                <h5>Questions</h5>
+                <button class="btn btn-dark" (click)="createQuestion(levels)">
+                  Create Question
+                </button>
+              </div>
+
+              <table class="table table-borderless table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col" colspan="2">Question</th>
+                    <th scope="col">Level</th>
+                    <th scope="col">Answer</th>
+                    <th scope="col">Created At</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let question of questions$ | async">
+                    <th scope="row " colspan="2">
+                      <div class="d-flex gap-3">
+                        <img
+                          [src]="question.question.image"
+                          alt="question image"
+                          class="me-2 rounded-2"
+                          style="width: 50px; height: 50px"
+                        />
+                        <h6>
+                          {{ question.question.question | slice : 0 : 15 }}{{
+                          question.question.question.length > 15 ? "..." : "" }}
+                        </h6>
+                      </div>
+                    </th>
+                    <td>{{ question.levelName }}</td>
+
+                    <td>{{ question.question.answer }}</td>
+                    <td>
+                      {{ question.question.createdAt.toLocaleDateString() }}
+                    </td>
+                    <td>
+                      <div class="d-flex gap-2">
+                        <button class="btn btn-success">
+                          <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+
+                        <button
+                          class="btn btn-danger"
+                          (click)="deleteQuestion(question.question)"
+                        >
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </ng-template>
+          </li>
+        </ul>
+
+        <div [ngbNavOutlet]="nav"></div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #noQuiz>
+    <p>No quiz found.</p>
+  </ng-template>
+</div>
